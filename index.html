@@ -487,54 +487,170 @@ public interface EstudianteRepository extends JpaRepository&lt;Estudiante, Long&
 </section>
 
 <section id="modulo-empresarial" class="cta-empresarial">
-  <h2>🚀 Continuación: módulo empresarial de Spring Boot</h2>
-
-  <p>
-    Esta OVA se complementa con una segunda página interactiva donde se explica
-    por qué las empresas usan Spring Boot en sistemas reales como bancos,
-    universidades, gobierno, logística, salud y comercio electrónico.
-  </p>
-
+  <h2>🚀 Módulo empresarial integrado: ¿Por qué las empresas usan Spring Boot?</h2>
+  <p>Este módulo ya quedó dentro de la misma OVA. No abre otra página ni depende de enlaces externos. Úselo como cierre motivador para conectar la teoría con el mundo empresarial.</p>
   <div class="grid">
     <div class="mini-card-dark">
-      <h3 style="color:white;">¿Qué verán allí?</h3>
-      <ul>
-        <li>Organización de proyectos empresariales.</li>
-        <li>Seguridad, roles y control de acceso.</li>
-        <li>APIs REST para conectar sistemas.</li>
-        <li>Microservicios explicados fácil.</li>
-        <li>Casos reales: banco, universidad, gobierno, salud y comercio.</li>
-        <li>Simulador empresarial por sector.</li>
-      </ul>
+      <h3 style="color:white;">Cómo usarlo</h3>
+      <p>Después del taller de Controller, Service y Repository, baje a este módulo para mostrar aplicaciones reales: bancos, universidades, gobierno, salud, logística y comercio electrónico.</p>
     </div>
-
     <div class="mini-card-dark">
-      <h3 style="color:white;">¿Cómo usarlo en clase?</h3>
-      <p>
-        Después de explicar Controller, Service, Repository y CRUD, abra este módulo
-        para mostrarles a los estudiantes que lo aprendido se usa en aplicaciones
-        empresariales reales.
-      </p>
-      <p>
-        Frase sugerida: <strong>“Ahora vamos a mirar cómo esto se aplica en empresas reales.”</strong>
-      </p>
+      <h3 style="color:white;">Frase docente sugerida</h3>
+      <p><strong>“Ahora vamos a mirar por qué esto no es solo código: es la forma como muchas empresas organizan sistemas reales.”</strong></p>
     </div>
   </div>
-
   <p style="margin-top:18px;">
-    <a class="mega-btn" href="https://cosmic-zuccutto-f64042.netlify.app/" target="_blank" rel="noopener">
-      🚀 Abrir módulo empresarial
-    </a>
-
-    <a class="mega-btn secondary" href="https://cosmic-zuccutto-f64042.netlify.app/" target="_blank" rel="noopener">
-      Abrir en nueva pestaña
-    </a>
+    <a class="mega-btn" href="#emp-inicio">Iniciar módulo empresarial</a>
+    <a class="mega-btn secondary" href="#ruta">Volver al inicio de la OVA</a>
   </p>
+</section>
 
-  <div class="nota" style="background:rgba(255,255,255,.92);color:#1f2937;">
-    <strong>Consejo docente:</strong> use este módulo como cierre motivador antes de asignar la tarea
-    aplicada al proyecto. Así los estudiantes conectan la sintaxis con el mundo laboral.
+<section>
+  <h2>🧭 Navegación del módulo empresarial</h2>
+  <div class="grid">
+    <div class="card"><h3>Empresas</h3><p>Razones por las que usan Spring Boot.</p><a class="btn btn2" style="display:inline-block;text-decoration:none" href="#emp-empresas">Ir</a></div>
+    <div class="card"><h3>APIs REST</h3><p>Comunicación entre sistemas.</p><a class="btn btn2" style="display:inline-block;text-decoration:none" href="#emp-api">Ir</a></div>
+    <div class="card"><h3>Microservicios</h3><p>Sistemas grandes divididos por módulos.</p><a class="btn btn2" style="display:inline-block;text-decoration:none" href="#emp-micro">Ir</a></div>
+    <div class="card"><h3>Simulador</h3><p>Analizar sectores empresariales.</p><a class="btn btn2" style="display:inline-block;text-decoration:none" href="#emp-simulador">Ir</a></div>
   </div>
+</section>
+
+<section id="emp-inicio">
+  <h2>1. Apertura de la clase</h2>
+  <div class="nota">
+    <strong>Frase para iniciar:</strong><br>
+    “Hoy vamos a entender por qué Spring Boot no es solo un tema de clase. Es una tecnología usada para construir sistemas reales: bancos, universidades, entidades públicas, salud, logística y comercio electrónico.”
+  </div>
+  <div class="grid">
+    <div class="card"><h3>Pregunta detonante</h3><p>¿Qué necesita un sistema bancario para funcionar bien?</p></div>
+    <div class="card"><h3>Pregunta detonante</h3><p>¿Qué pasa si una universidad tiene miles de estudiantes consultando notas al mismo tiempo?</p></div>
+    <div class="card"><h3>Pregunta detonante</h3><p>¿Por qué una empresa no puede tener todo su código desordenado?</p></div>
+  </div>
+  <div class="exito">Idea central: Spring Boot ayuda a construir sistemas organizados, escalables y preparados para crecer.</div>
+</section>
+
+<section id="emp-empresas">
+  <h2>2. ¿Por qué las empresas usan Spring Boot?</h2>
+  <p>Las empresas necesitan sistemas que no solo funcionen, sino que sean mantenibles, seguros, escalables y capaces de conectarse con otros sistemas.</p>
+  <div class="grid">
+    <div class="card"><span class="badge">Organización</span><h3>Proyecto ordenado</h3><p>Spring separa responsabilidades: Controller, Service, Repository, Model y View.</p></div>
+    <div class="card"><span class="badge">Seguridad</span><h3>Control de acceso</h3><p>Permite integrar autenticación, roles, permisos y protección de rutas.</p></div>
+    <div class="card"><span class="badge">Escalabilidad</span><h3>Crecer sin colapsar</h3><p>Facilita que el sistema aumente usuarios, módulos y funcionalidades.</p></div>
+    <div class="card"><span class="badge">BD</span><h3>Conexión rápida a datos</h3><p>Spring Data JPA simplifica guardar, consultar, editar y eliminar información.</p></div>
+    <div class="card"><span class="badge">APIs</span><h3>Comunicación entre sistemas</h3><p>Permite crear servicios REST para conectar web, móviles y plataformas externas.</p></div>
+    <div class="card"><span class="badge">Microservicios</span><h3>Sistemas por módulos</h3><p>Permite dividir grandes sistemas en servicios más pequeños y especializados.</p></div>
+  </div>
+  <div class="exito">Frase potente: Actualmente muchas empresas usan Spring Boot para sistemas bancarios, universitarios, gubernamentales, logísticos, de salud y comercio electrónico.</div>
+</section>
+
+<section id="emp-ventajas">
+  <h2>3. Ventajas empresariales explicadas con ejemplos</h2>
+  <table>
+    <thead><tr><th>Ventaja</th><th>Ejemplo empresarial</th><th>Cómo ayuda Spring Boot</th></tr></thead>
+    <tbody>
+      <tr><td>Organización</td><td>Una universidad maneja estudiantes, docentes, notas, pagos y horarios.</td><td>Separa cada módulo y cada capa para evitar desorden.</td></tr>
+      <tr><td>Seguridad</td><td>Un banco no puede mostrar datos de todos los clientes a cualquier persona.</td><td>Permite manejar login, roles y permisos.</td></tr>
+      <tr><td>Escalabilidad</td><td>Una tienda virtual aumenta visitas en temporada de descuentos.</td><td>Permite construir sistemas preparados para crecer.</td></tr>
+      <tr><td>Base de datos</td><td>Un hospital guarda pacientes, médicos, citas e historias clínicas.</td><td>Facilita la persistencia con repositorios.</td></tr>
+      <tr><td>APIs REST</td><td>Una app móvil consulta información de un sistema central.</td><td>Expone rutas como /api/productos o /api/usuarios.</td></tr>
+      <tr><td>Microservicios</td><td>Una empresa divide pagos, usuarios, inventario y envíos.</td><td>Cada servicio puede funcionar de forma más independiente.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="emp-api">
+  <h2>4. APIs REST explicadas fácil</h2>
+  <p>Una API REST permite que un sistema hable con otro. No siempre se devuelve una página HTML; a veces se devuelven datos.</p>
+  <div class="flow"><div>App móvil</div><span class="arrow">→</span><div>API REST</div><span class="arrow">→</span><div>Spring Boot</div><span class="arrow">→</span><div>Base de datos</div><span class="arrow">→</span><div>Respuesta JSON</div></div>
+  <div class="panel">// @RestController indica que esta clase devuelve datos, no páginas HTML
+@RestController
+public class ProductoApiController {
+
+    // Cuando alguien entra a /api/productos, se devuelve una lista de productos
+    @GetMapping("/api/productos")
+    public List&lt;Producto&gt; listarProductos() {
+        return productoService.listarTodos();
+    }
+}</div>
+  <div class="nota"><strong>Traducción natural:</strong> “La aplicación móvil pregunta por productos. Spring Boot consulta la información y responde con datos.”</div>
+</section>
+
+<section id="emp-micro">
+  <h2>5. Microservicios explicados sin complicarse</h2>
+  <p>Un microservicio es una parte pequeña de un sistema grande. Cada parte cumple una función específica.</p>
+  <table>
+    <thead><tr><th>Sistema grande</th><th>Microservicios posibles</th></tr></thead>
+    <tbody>
+      <tr><td>Universidad</td><td>Estudiantes, matrícula, notas, pagos, biblioteca.</td></tr>
+      <tr><td>Banco</td><td>Clientes, cuentas, pagos, transferencias, seguridad.</td></tr>
+      <tr><td>Tienda virtual</td><td>Productos, carrito, pagos, envíos, usuarios.</td></tr>
+      <tr><td>Entidad pública</td><td>Trámites, usuarios, pagos, reportes, autenticación.</td></tr>
+    </tbody>
+  </table>
+  <div class="exito">Analogía: no todo el edificio debe estar en una sola oficina. Cada área puede tener una función clara.</div>
+</section>
+
+<section id="emp-simulador">
+  <h2>6. Simulador empresarial</h2>
+  <p>Seleccione un tipo de empresa y vea cómo Spring Boot podría ayudar.</p>
+  <select id="empresa">
+    <option value="">Seleccione una empresa o sector</option>
+    <option value="banco">Banco</option>
+    <option value="universidad">Universidad</option>
+    <option value="gobierno">Entidad pública</option>
+    <option value="salud">Salud</option>
+    <option value="logistica">Logística</option>
+    <option value="comercio">Comercio electrónico</option>
+  </select>
+  <button class="btn" onclick="simularEmpresa()">Analizar</button>
+  <div id="empresaResultado" class="resultado">Seleccione un sector.</div>
+  <div id="empresaArquitectura" class="panel">Aquí aparecerán posibles módulos y rutas.</div>
+</section>
+
+<section id="emp-casos">
+  <h2>7. Casos tipo para explicar en clase</h2>
+  <div class="timeline">
+    <div class="step"><div class="num">1</div><div class="card"><h3>Caso banco</h3><p>Un cliente consulta su saldo desde una app móvil. Spring Boot puede exponer una API REST que consulta la cuenta y devuelve los datos.</p></div></div>
+    <div class="step"><div class="num">2</div><div class="card"><h3>Caso universidad</h3><p>Un estudiante consulta sus notas. El sistema usa Controller, Service y Repository para buscar la información y mostrarla.</p></div></div>
+    <div class="step"><div class="num">3</div><div class="card"><h3>Caso gobierno</h3><p>Un ciudadano consulta el estado de un trámite. Spring Boot permite crear rutas seguras y conectarse con bases de datos institucionales.</p></div></div>
+    <div class="step"><div class="num">4</div><div class="card"><h3>Caso tienda virtual</h3><p>Un usuario agrega productos al carrito. El sistema valida stock, calcula total y registra la compra.</p></div></div>
+  </div>
+</section>
+
+<section id="emp-recursos">
+  <h2>8. Recursos de apoyo y videos</h2>
+  <div class="grid">
+    <div class="card links"><h3>Videos para estudiantes</h3>
+      <a target="_blank" href="https://www.youtube.com/results?search_query=spring+boot+para+principiantes+espa%C3%B1ol">Spring Boot para principiantes</a>
+      <a target="_blank" href="https://www.youtube.com/results?search_query=api+rest+spring+boot+espa%C3%B1ol">API REST con Spring Boot</a>
+      <a target="_blank" href="https://www.youtube.com/results?search_query=microservicios+spring+boot+espa%C3%B1ol">Microservicios con Spring Boot</a>
+      <a target="_blank" href="https://www.youtube.com/results?search_query=spring+security+roles+permisos+espa%C3%B1ol">Spring Security roles y permisos</a>
+    </div>
+    <div class="card links"><h3>Páginas de apoyo</h3>
+      <a target="_blank" href="https://spring.io/projects/spring-boot">Spring Boot oficial</a>
+      <a target="_blank" href="https://spring.io/projects/spring-security">Spring Security oficial</a>
+      <a target="_blank" href="https://spring.io/projects/spring-data-jpa">Spring Data JPA oficial</a>
+      <a target="_blank" href="https://spring.io/microservices">Spring Microservices oficial</a>
+      <a target="_blank" href="https://start.spring.io/">Spring Initializr</a>
+    </div>
+  </div>
+</section>
+
+<section id="emp-proyecto">
+  <h2>9. Aplicación al proyecto de cada grupo</h2>
+  <p>Ahora cada grupo debe responder cómo su proyecto puede beneficiarse de Spring Boot.</p>
+  <table>
+    <thead><tr><th>Pregunta</th><th>Respuesta del grupo</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>¿Cuál es el proyecto?</td><td>________________________</td><td>Sistema de inventario</td></tr>
+      <tr><td>¿Qué entidades maneja?</td><td>________________________</td><td>Producto, proveedor, usuario</td></tr>
+      <tr><td>¿Qué módulos tendría?</td><td>________________________</td><td>Productos, ventas, reportes</td></tr>
+      <tr><td>¿Qué API podría crear?</td><td>________________________</td><td>/api/productos</td></tr>
+      <tr><td>¿Qué seguridad necesita?</td><td>________________________</td><td>Administrador y usuario</td></tr>
+      <tr><td>¿Cómo podría crecer?</td><td>________________________</td><td>Agregar compras, facturación, estadísticas</td></tr>
+    </tbody>
+  </table>
+  <div class="exito">Cierre: Spring Boot no es solo código; es una forma profesional de pensar y organizar sistemas reales.</div>
 </section>
 
 </main>
@@ -601,6 +717,25 @@ function crearRutas(){
   if(!e){document.getElementById('rutasGeneradas').textContent='Escriba primero una entidad. Ejemplo: producto';return}
   let plural=e.endsWith('s')?e:e+'s';
   document.getElementById('rutasGeneradas').textContent=`Entidad: ${e}\n\nGET /${plural} -> listar ${plural}\nGET /${plural}/nuevo -> abrir formulario para crear ${e}\nPOST /${plural}/guardar -> guardar ${e}\nGET /${plural}/editar/{id} -> editar ${e}\nGET /${plural}/eliminar/{id} -> eliminar ${e}\n\nTraducción natural:\nEl usuario ve, crea, guarda, edita o elimina ${plural}. Spring conecta cada movimiento con una ruta y un método Java.`;
+}
+
+
+/* Simulador del módulo empresarial integrado */
+function simularEmpresa(){
+  const v=document.getElementById('empresa').value;
+  const r=document.getElementById('empresaResultado');
+  const a=document.getElementById('empresaArquitectura');
+  const datos={
+    banco:['Un banco necesita seguridad, transacciones, consultas rápidas y conexión con múltiples sistemas.', 'Módulos posibles:\n- Clientes\n- Cuentas\n- Transferencias\n- Seguridad\n- Reportes\n\nRutas ejemplo:\nGET /api/cuentas/{id}\nPOST /api/transferencias\nGET /api/clientes'],
+    universidad:['Una universidad necesita manejar estudiantes, docentes, materias, notas, pagos y horarios.', 'Módulos posibles:\n- Estudiantes\n- Docentes\n- Matrícula\n- Notas\n- Biblioteca\n\nRutas ejemplo:\nGET /estudiantes\nPOST /matriculas/guardar\nGET /api/notas/{id}'],
+    gobierno:['Una entidad pública necesita trazabilidad, seguridad, trámites, usuarios y reportes.', 'Módulos posibles:\n- Trámites\n- Ciudadanos\n- Funcionarios\n- Pagos\n- Reportes\n\nRutas ejemplo:\nGET /tramites\nPOST /tramites/guardar\nGET /api/tramites/estado/{id}'],
+    salud:['El sector salud necesita manejar pacientes, citas, médicos, historias y autorizaciones.', 'Módulos posibles:\n- Pacientes\n- Médicos\n- Citas\n- Historias clínicas\n- Autorizaciones\n\nRutas ejemplo:\nGET /pacientes\nPOST /citas/guardar\nGET /api/citas/{id}'],
+    logistica:['La logística necesita controlar envíos, rutas, vehículos, conductores y estados.', 'Módulos posibles:\n- Envíos\n- Rutas\n- Vehículos\n- Conductores\n- Seguimiento\n\nRutas ejemplo:\nGET /envios\nPOST /rutas/guardar\nGET /api/envios/estado/{id}'],
+    comercio:['El comercio electrónico necesita productos, usuarios, carrito, pagos, inventario y envíos.', 'Módulos posibles:\n- Productos\n- Usuarios\n- Carrito\n- Pagos\n- Envíos\n\nRutas ejemplo:\nGET /productos\nPOST /carrito/agregar\nGET /api/productos']
+  };
+  if(!datos[v]){r.textContent='Seleccione un sector.';a.textContent='Aquí aparecerán posibles módulos y rutas.';return}
+  r.textContent=datos[v][0];
+  a.textContent=datos[v][1];
 }
 </script>
 </body>
