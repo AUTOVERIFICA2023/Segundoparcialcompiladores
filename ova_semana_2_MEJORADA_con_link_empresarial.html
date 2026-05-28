@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OVA UTS - Semana 2 Spring Boot MVC, Controladores y Persistencia</title>
+  <style>
+    :root{
+      --uts-verde:#bed62f;
+      --azul:#073763;
+      --azul2:#0b5394;
+      --rojo:#c0392b;
+      --verde:#198754;
+      --amarillo:#f4c430;
+      --gris:#f3f6fb;
+      --texto:#1f2937;
+      --sombra:0 14px 34px rgba(0,0,0,.13);
+    }
+    *{box-sizing:border-box;scroll-behavior:smooth}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--gris);color:var(--texto);line-height:1.6}
+    header{background:linear-gradient(125deg,#ffffff 0%,#f8fafc 38%,#edf8b8 100%);padding:28px 20px 34px;border-bottom:8px solid var(--uts-verde)}
+    .hero{max-width:1250px;margin:auto;display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:center}
+    .logo{background:white;border-radius:24px;padding:18px;box-shadow:var(--sombra);text-align:center}
+    .logo img{max-width:100%;height:auto}
+    h1{margin:0;color:var(--azul);font-size:clamp(2rem,4vw,3.45rem);line-height:1.05}
+    header p{font-size:1.12rem;margin:.75rem 0 0;max-width:980px}
+    .docente{display:inline-block;margin-top:16px;background:var(--azul);color:white;border-radius:999px;padding:10px 18px;font-weight:bold}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.chips span{background:white;border:1px solid #d1d5db;padding:7px 12px;border-radius:999px;font-weight:bold;color:var(--azul)}
+    nav{position:sticky;top:0;z-index:100;background:white;box-shadow:0 6px 20px rgba(0,0,0,.1);display:flex;gap:6px;overflow-x:auto;padding:10px;justify-content:center}
+    nav a{color:var(--azul);text-decoration:none;font-weight:bold;padding:9px 12px;border-radius:12px;white-space:nowrap;font-size:.92rem}
+    nav a:hover{background:var(--uts-verde);color:#111}
+    main{max-width:1250px;margin:auto;padding:24px 16px 70px}
+    section{background:white;margin:26px 0;padding:28px;border-radius:26px;box-shadow:var(--sombra)}
+    h2{margin-top:0;color:var(--azul);font-size:2rem;border-left:10px solid var(--uts-verde);padding-left:14px}
+    h3{color:var(--azul2);margin-bottom:8px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
+    .card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:20px;padding:20px;transition:.25s}
+    .card:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(0,0,0,.12)}
+    .badge{display:inline-block;background:var(--uts-verde);color:#1f2937;padding:5px 11px;border-radius:999px;font-size:.82rem;font-weight:bold;margin-bottom:6px}
+    .nota{background:#fefce8;border-left:7px solid var(--amarillo);padding:16px;border-radius:16px;margin:16px 0}
+    .exito{background:#ecfdf5;border-left:7px solid var(--verde);padding:16px;border-radius:16px;margin:16px 0;font-weight:bold}
+    .alerta{background:#fff1f2;border-left:7px solid var(--rojo);padding:16px;border-radius:16px;margin:16px 0}
+    .panel{background:#0f172a;color:#e5e7eb;border-radius:18px;padding:18px;overflow:auto;font-family:Consolas,Monaco,monospace;white-space:pre-wrap;min-height:120px;font-size:.95rem}
+    .btn{border:0;border-radius:13px;padding:11px 15px;margin:5px;background:var(--azul);color:white;font-weight:bold;cursor:pointer}
+    .btn:hover{background:var(--azul2)}.btn2{background:var(--uts-verde);color:#111}.btn3{background:var(--rojo)}.btn4{background:var(--verde)}
+    .resultado{background:#eef6ff;border-left:7px solid var(--azul2);padding:16px;border-radius:16px;margin-top:12px;font-weight:bold}
+    table{width:100%;border-collapse:collapse;border-radius:16px;overflow:hidden;margin-top:12px}
+    th,td{padding:13px;border-bottom:1px solid #e5e7eb;text-align:left;vertical-align:top}
+    th{background:var(--azul);color:white}tr:nth-child(even){background:#f8fafc}
+    input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:12px;margin:6px 0 12px;font-size:1rem}
+    .flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;margin:18px 0}.flow div{background:var(--azul);color:white;padding:15px 18px;border-radius:16px;font-weight:bold;text-align:center}.arrow{font-size:1.8rem;color:var(--rojo);font-weight:bold}
+    .timeline{display:grid;gap:14px}.step{display:grid;grid-template-columns:55px 1fr;gap:14px;align-items:start}.num{width:48px;height:48px;border-radius:50%;background:var(--uts-verde);display:grid;place-items:center;font-weight:bold;color:#111;font-size:1.15rem}
+    .quiz-option,.check{padding:12px;border:1px solid #cbd5e1;border-radius:13px;background:#f8fafc;margin:8px 0;cursor:pointer}.quiz-option:hover,.check:hover{background:#edf8b8}.done{background:#dcfce7!important;border-color:#16a34a!important}
+    .progress-wrap{background:#e5e7eb;border-radius:999px;height:18px;overflow:hidden;margin:12px 0}.progress{height:100%;width:0;background:var(--uts-verde);transition:.4s}
+    .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.tab{padding:10px 14px;border-radius:12px;background:#e5e7eb;cursor:pointer;font-weight:bold}.tab.active{background:var(--azul);color:white}
+    .hidden{display:none}.footer{text-align:center;background:var(--azul);color:white;padding:32px 18px}.small{font-size:.9rem;color:#64748b}
+
+    .cta-empresarial{
+      background:linear-gradient(135deg,#073763 0%,#0b5394 55%,#bed62f 100%);
+      color:white;
+      border-radius:28px;
+      padding:30px;
+      box-shadow:0 18px 45px rgba(7,55,99,.28);
+      position:relative;
+      overflow:hidden;
+    }
+    .cta-empresarial::after{
+      content:"";
+      position:absolute;
+      width:220px;height:220px;
+      border-radius:50%;
+      background:rgba(255,255,255,.16);
+      right:-70px;top:-70px;
+    }
+    .cta-empresarial h2{
+      color:white;
+      border-left:10px solid var(--uts-verde);
+      position:relative;
+      z-index:1;
+    }
+    .cta-empresarial p,.cta-empresarial li{position:relative;z-index:1}
+    .mega-btn{
+      display:inline-block;
+      background:var(--uts-verde);
+      color:#111;
+      padding:16px 24px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:bold;
+      font-size:1.08rem;
+      box-shadow:0 10px 24px rgba(0,0,0,.22);
+      transition:.25s;
+      position:relative;
+      z-index:1;
+      margin:6px 8px 6px 0;
+    }
+    .mega-btn:hover{transform:translateY(-3px);background:#d7ef52}
+    .mega-btn.secondary{background:white;color:var(--azul)}
+    .floating-next{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      background:var(--uts-verde);
+      color:#111;
+      padding:13px 16px;
+      border-radius:999px;
+      font-weight:bold;
+      text-decoration:none;
+      box-shadow:0 12px 28px rgba(0,0,0,.25);
+      z-index:200;
+      border:2px solid white;
+    }
+    .floating-next:hover{background:#d7ef52}
+    .mini-card-dark{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.28);
+      color:white;
+      border-radius:18px;
+      padding:18px;
+      position:relative;
+      z-index:1;
+    }
+
+    @media(max-width:760px){.hero{grid-template-columns:1fr}.logo{max-width:240px}.step{grid-template-columns:1fr}.flow{flex-direction:column}.arrow{transform:rotate(90deg)}nav{justify-content:flex-start}section{padding:20px}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="hero">
+    <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Unidades_Tecnol%C3%B3gicas_de_Santander_%28UTS%29_logo.png" alt="Logo UTS"></div>
+    <div>
+      <h1>OVA Semana 2: Spring Boot MVC, Controladores y Persistencia</h1>
+      <p>Clase práctica e interactiva para conectar vistas, rutas, controladores, servicios, repositorios y base de datos mediante ejemplos en lenguaje natural y sintaxis Java Spring Boot.</p>
+      <div class="docente">Docente: Pedro Antonio Ramírez García</div>
+      <div class="chips"><span>Duración: 2 horas y 30 minutos</span><span>Spring Boot</span><span>MVC</span><span>CRUD</span><span>Aplicación a proyecto</span></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="#ruta">Ruta</a><a href="#repaso">Repaso</a><a href="#objetivo">Objetivo</a><a href="#rutas">Rutas</a><a href="#controlador">Controller</a><a href="#service">Service</a><a href="#repository">Repository</a><a href="#simuladores">Simuladores</a><a href="#taller">Taller</a><a href="#entrega">Entrega</a><a href="#proyecto">Proyecto</a><a href="#modulo-empresarial">Módulo empresarial</a>
+</nav>
+<a class="floating-next" href="#modulo-empresarial">🚀 Módulo empresarial</a>
+
+<main>
+<section id="ruta">
+  <h2>0. Ruta de trabajo para 2 horas y 30 minutos</h2>
+  <div class="progress-wrap"><div id="barra" class="progress"></div></div>
+  <div class="grid">
+    <div class="card"><span class="badge">Extra</span><h3>Módulo empresarial</h3><p>Al final, los estudiantes podrán abrir una segunda página con ejemplos reales de empresas.</p><a class="btn btn4" href="#modulo-empresarial" style="display:inline-block;text-decoration:none;">Ir al módulo</a></div>
+    <div class="card"><span class="badge">15 min</span><h3>Repaso guiado</h3><p>Spring, MVC y capas.</p><button class="btn btn2" onclick="avance(10)">Marcar</button></div>
+    <div class="card"><span class="badge">25 min</span><h3>Rutas y controladores</h3><p>GET, POST, @Controller, @GetMapping, @PostMapping.</p><button class="btn btn2" onclick="avance(30)">Marcar</button></div>
+    <div class="card"><span class="badge">30 min</span><h3>Service y Repository</h3><p>Lógica y persistencia.</p><button class="btn btn2" onclick="avance(50)">Marcar</button></div>
+    <div class="card"><span class="badge">25 min</span><h3>Simuladores</h3><p>Viaje de datos y elección de anotaciones.</p><button class="btn btn2" onclick="avance(68)">Marcar</button></div>
+    <div class="card"><span class="badge">45 min</span><h3>Taller práctico</h3><p>Aplicar la estructura a un mini CRUD.</p><button class="btn btn2" onclick="avance(90)">Marcar</button></div>
+    <div class="card"><span class="badge">10 min</span><h3>Cierre y tarea</h3><p>Aplicación al proyecto de cada grupo.</p><button class="btn btn2" onclick="avance(100)">Marcar</button></div>
+  </div>
+</section>
+
+<section>
+  <h2>⚡ Antes de iniciar: cómo aprovechar esta OVA</h2>
+  <div class="grid">
+    <div class="card"><h3>Modo docente</h3><p>La idea NO es leer todo literalmente. Use las analogías y los simuladores para conversar con los estudiantes.</p></div>
+    <div class="card"><h3>Modo estudiante</h3><p>Los estudiantes deben relacionar cada ejemplo con su proyecto del tercer corte.</p></div>
+    <div class="card"><h3>Meta real</h3><p>Que comprendan el flujo completo: usuario → ruta → controlador → servicio → base de datos.</p></div>
+  </div>
+  <div class="nota"><strong>Consejo para usted:</strong> si no recuerda sintaxis exacta, no hay problema. Lo importante es explicar el movimiento lógico del sistema usando ejemplos cotidianos.</div>
+</section>
+
+<section id="repaso">
+  <h2>1. Repaso: ¿qué aprendimos la semana anterior?</h2>
+  <div class="grid">
+    <div class="card"><h3>Spring Boot</h3><p>Permite iniciar proyectos Java web de forma más rápida y organizada.</p></div>
+    <div class="card"><h3>MVC</h3><p>Separa la aplicación en Modelo, Vista y Controlador.</p></div>
+    <div class="card"><h3>Capas</h3><p>Controller recibe, Service procesa, Repository consulta y Model representa datos.</p></div>
+  </div>
+  <div class="nota"><strong>Frase para explicar:</strong> “Hoy vamos a mirar el movimiento interno: qué pasa cuando un usuario da clic, llena un formulario o consulta información.”</div>
+</section>
+
+<section id="objetivo">
+  <h2>2. Objetivo de la semana</h2>
+  <p>Comprender cómo una aplicación Spring Boot mueve información desde la pantalla hasta la base de datos, usando controladores, servicios, repositorios y modelos.</p>
+  <div class="flow"><div>Usuario</div><span class="arrow">→</span><div>Vista</div><span class="arrow">→</span><div>Controller</div><span class="arrow">→</span><div>Service</div><span class="arrow">→</span><div>Repository</div><span class="arrow">→</span><div>BD</div></div>
+  <div class="exito">Meta final: que cada estudiante aplique esta estructura a su propio proyecto del tercer corte.</div>
+</section>
+
+<section>
+  <h2>2.1 ¿Cómo piensa realmente una aplicación web?</h2>
+  <p>Antes de entrar a código, el estudiante debe entender el pensamiento detrás del sistema.</p>
+  <table>
+    <thead><tr><th>Situación real</th><th>¿Qué piensa el usuario?</th><th>¿Qué hace Spring?</th></tr></thead>
+    <tbody>
+      <tr><td>Instagram</td><td>“Quiero ver publicaciones”.</td><td>Consulta datos y devuelve una vista.</td></tr>
+      <tr><td>Banco</td><td>“Quiero consultar saldo”.</td><td>Busca información en BD y responde.</td></tr>
+      <tr><td>Universidad</td><td>“Quiero registrar una materia”.</td><td>Recibe datos y los guarda.</td></tr>
+      <tr><td>Tienda virtual</td><td>“Quiero comprar un producto”.</td><td>Valida, procesa y almacena.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="exito">Idea poderosa para explicar: una aplicación web es un sistema que escucha solicitudes y responde.</div>
+</section>
+
+<section id="rutas">
+  <h2>3. Rutas web: lenguaje natural vs sintaxis Spring</h2>
+  <p>Una ruta es la dirección que el usuario escribe o visita en el navegador. En Spring, esa ruta se conecta con un método Java.</p>
+  <table>
+    <thead><tr><th>Movimiento del usuario</th><th>Lenguaje natural</th><th>Sintaxis Spring</th><th>¿Para qué sirve?</th></tr></thead>
+    <tbody>
+      <tr><td>Abre una página</td><td>“Quiero ver la lista de estudiantes”.</td><td>@GetMapping("/estudiantes")</td><td>Mostrar información.</td></tr>
+      <tr><td>Abre un formulario</td><td>“Quiero registrar un nuevo estudiante”.</td><td>@GetMapping("/estudiantes/nuevo")</td><td>Mostrar formulario vacío.</td></tr>
+      <tr><td>Envía datos</td><td>“Ya llené el formulario, ahora guarde”.</td><td>@PostMapping("/estudiantes/guardar")</td><td>Recibir y guardar datos.</td></tr>
+      <tr><td>Edita un registro</td><td>“Quiero modificar el estudiante con id 5”.</td><td>@GetMapping("/estudiantes/editar/{id}")</td><td>Buscar por ID y mostrar datos.</td></tr>
+      <tr><td>Elimina un registro</td><td>“Quiero borrar el estudiante con id 5”.</td><td>@GetMapping("/estudiantes/eliminar/{id}")</td><td>Eliminar registro.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="controlador">
+  <h2>4. Controller: el recepcionista del sistema</h2>
+  <p>El controlador recibe la solicitud del usuario y decide qué hacer. No debería hacer todo el trabajo pesado.</p>
+  <div class="nota"><strong>Analogía:</strong> El Controller es como la recepción de una entidad: recibe la solicitud y la dirige al área correcta.</div>
+  <div class="panel">// Esta clase será un controlador web
+@Controller
+public class EstudianteController {
+
+    // El controlador necesita un servicio para procesar la lógica
+    private final EstudianteService estudianteService;
+
+    // Spring entrega automáticamente el servicio al controlador
+    public EstudianteController(EstudianteService estudianteService) {
+        this.estudianteService = estudianteService;
+    }
+
+    // Cuando el usuario entra a /estudiantes, se ejecuta este método
+    @GetMapping("/estudiantes")
+    public String listar(Model model) {
+
+        // Se consulta la lista de estudiantes por medio del servicio
+        model.addAttribute("lista", estudianteService.listarTodos());
+
+        // Se muestra la vista estudiantes.html
+        return "estudiantes";
+    }
+}</div>
+  <div class="exito">Idea sencilla: el Controller recibe la ruta, conversa con el Service y devuelve una vista.</div>
+</section>
+
+<section id="service">
+  <h2>5. Service: donde vive la lógica del negocio</h2>
+  <p>El servicio procesa reglas. Por ejemplo: validar si un nombre está vacío, convertir datos, hacer cálculos o decidir si algo se puede guardar.</p>
+  <table>
+    <thead><tr><th>Regla del negocio</th><th>Lenguaje natural</th><th>Ejemplo en Service</th></tr></thead>
+    <tbody>
+      <tr><td>Validar nombre</td><td>“No puedo guardar un estudiante sin nombre”.</td><td>if(nombre == null || nombre.isBlank())</td></tr>
+      <tr><td>Validar correo</td><td>“El correo debe tener @”.</td><td>if(!correo.contains("@"))</td></tr>
+      <tr><td>Listar</td><td>“Traiga todos los estudiantes”.</td><td>repository.findAll()</td></tr>
+      <tr><td>Guardar</td><td>“Guarde este estudiante”.</td><td>repository.save(estudiante)</td></tr>
+    </tbody>
+  </table>
+  <div class="panel">@Service
+public class EstudianteService {
+
+    private final EstudianteRepository estudianteRepository;
+
+    public EstudianteService(EstudianteRepository estudianteRepository) {
+        this.estudianteRepository = estudianteRepository;
+    }
+
+    public Estudiante guardar(Estudiante estudiante) {
+
+        // Validación sencilla antes de guardar
+        if(estudiante.getNombre() == null || estudiante.getNombre().isBlank()) {
+            throw new RuntimeException("El nombre es obligatorio");
+        }
+
+        // Si todo está bien, se guarda en la base de datos
+        return estudianteRepository.save(estudiante);
+    }
+}</div>
+</section>
+
+<section id="repository">
+  <h2>6. Repository: el puente con la base de datos</h2>
+  <p>El Repository se encarga de hablar con la base de datos. Spring Data JPA ya trae muchos métodos listos.</p>
+  <table>
+    <thead><tr><th>Necesidad</th><th>Método</th><th>Traducción natural</th></tr></thead>
+    <tbody>
+      <tr><td>Listar todo</td><td>findAll()</td><td>Traiga todos los registros.</td></tr>
+      <tr><td>Buscar por ID</td><td>findById(id)</td><td>Busque el registro número X.</td></tr>
+      <tr><td>Guardar</td><td>save(objeto)</td><td>Guarde o actualice este dato.</td></tr>
+      <tr><td>Eliminar</td><td>deleteById(id)</td><td>Elimine el registro número X.</td></tr>
+    </tbody>
+  </table>
+  <div class="panel">// JpaRepository recibe dos datos:
+// 1. La entidad que manejará: Estudiante
+// 2. El tipo de dato del ID: Long
+public interface EstudianteRepository extends JpaRepository&lt;Estudiante, Long&gt; {
+
+    // Spring genera automáticamente métodos básicos como:
+    // findAll(), findById(), save(), deleteById()
+}</div>
+</section>
+
+<section>
+  <h2>6.1 Comparación: Java tradicional vs Spring Boot</h2>
+  <table>
+    <thead><tr><th>Aspecto</th><th>Java tradicional</th><th>Spring Boot</th></tr></thead>
+    <tbody>
+      <tr><td>Configuración</td><td>Más manual</td><td>Más automática</td></tr>
+      <tr><td>Estructura</td><td>Puede quedar mezclada</td><td>Organizada por capas</td></tr>
+      <tr><td>Conexión web</td><td>Más compleja</td><td>Más rápida con anotaciones</td></tr>
+      <tr><td>CRUD</td><td>Más código repetitivo</td><td>JpaRepository simplifica procesos</td></tr>
+      <tr><td>Escalabilidad</td><td>Puede complicarse</td><td>Mejor organización para crecer</td></tr>
+    </tbody>
+  </table>
+
+  <div class="nota"><strong>Frase para clase:</strong> “Spring Boot no elimina Java. Spring Boot organiza Java para proyectos empresariales.”</div>
+</section>
+
+<section>
+  <h2>6.2 El viaje completo de una solicitud</h2>
+  <div class="flow"><div>Usuario llena formulario</div><span class="arrow">→</span><div>Controller recibe</div><span class="arrow">→</span><div>Service valida</div><span class="arrow">→</span><div>Repository guarda</div><span class="arrow">→</span><div>Base de datos</div><span class="arrow">→</span><div>Respuesta HTML</div></div>
+
+  <div class="grid">
+    <div class="card"><h3>Usuario</h3><p>Interactúa con formularios y botones.</p></div>
+    <div class="card"><h3>Controller</h3><p>Escucha la ruta y recibe datos.</p></div>
+    <div class="card"><h3>Service</h3><p>Valida reglas y procesa lógica.</p></div>
+    <div class="card"><h3>Repository</h3><p>Habla con la base de datos.</p></div>
+    <div class="card"><h3>BD</h3><p>Almacena información permanentemente.</p></div>
+    <div class="card"><h3>Vista</h3><p>Muestra resultados al usuario.</p></div>
+  </div>
+
+  <div class="alerta"><strong>Error común:</strong> poner toda la lógica dentro del Controller. Explique que cada capa tiene responsabilidades distintas.</div>
+</section>
+
+<section>
+  <h2>6.3 Videos de apoyo recomendados</h2>
+  <p>Use estos videos como apoyo visual durante la clase o como material de repaso.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Introducción a Spring Boot</h3>
+      <p>Ideal para comprender qué es Spring Boot desde cero.</p>
+      <p><a target="_blank" href="https://www.youtube.com/results?search_query=introduccion+spring+boot+java+español">Abrir videos sugeridos</a></p>
+    </div>
+    <div class="card">
+      <h3>Patrón MVC explicado</h3>
+      <p>Explicación visual de Modelo, Vista y Controlador.</p>
+      <p><a target="_blank" href="https://www.youtube.com/results?search_query=patron+mvc+spring+boot+español">Abrir videos sugeridos</a></p>
+    </div>
+    <div class="card">
+      <h3>CRUD Spring Boot</h3>
+      <p>Construcción completa de un CRUD con formularios y base de datos.</p>
+      <p><a target="_blank" href="https://www.youtube.com/results?search_query=crud+spring+boot+mysql+español">Abrir videos sugeridos</a></p>
+    </div>
+    <div class="card">
+      <h3>Spring Data JPA</h3>
+      <p>Cómo Spring trabaja con repositorios y persistencia.</p>
+      <p><a target="_blank" href="https://www.youtube.com/results?search_query=spring+data+jpa+español">Abrir videos sugeridos</a></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>6.4 Páginas oficiales y recursos de apoyo</h2>
+  <div class="grid">
+    <div class="card"><h3>Spring Initializr</h3><p>Generador oficial de proyectos Spring Boot.</p><p><a target="_blank" href="https://start.spring.io/">Abrir página</a></p></div>
+    <div class="card"><h3>Spring Official</h3><p>Documentación oficial de Spring.</p><p><a target="_blank" href="https://spring.io/">Abrir página</a></p></div>
+    <div class="card"><h3>Spring Guides</h3><p>Tutoriales oficiales paso a paso.</p><p><a target="_blank" href="https://spring.io/guides">Abrir página</a></p></div>
+    <div class="card"><h3>Baeldung</h3><p>Uno de los sitios más usados para aprender Spring.</p><p><a target="_blank" href="https://www.baeldung.com/spring-boot">Abrir página</a></p></div>
+    <div class="card"><h3>Thymeleaf</h3><p>Motor de plantillas HTML usado con Spring Boot.</p><p><a target="_blank" href="https://www.thymeleaf.org/">Abrir página</a></p></div>
+    <div class="card"><h3>Spring Data JPA</h3><p>Persistencia y acceso a datos.</p><p><a target="_blank" href="https://spring.io/projects/spring-data-jpa">Abrir página</a></p></div>
+  </div>
+</section>
+
+<section id="simuladores">
+  <h2>7. Simuladores interactivos</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Simulador 1: elija una acción del usuario</h3>
+      <select id="accion">
+        <option value="">Seleccione</option>
+        <option value="listar">Ver lista</option>
+        <option value="nuevo">Abrir formulario</option>
+        <option value="guardar">Guardar formulario</option>
+        <option value="editar">Editar registro</option>
+        <option value="eliminar">Eliminar registro</option>
+      </select>
+      <button class="btn" onclick="simularAccion()">Simular</button>
+      <div id="accionResultado" class="resultado">Seleccione una acción.</div>
+      <div id="accionCodigo" class="panel">Aquí aparecerá la ruta Spring.</div>
+    </div>
+    <div class="card">
+      <h3>Simulador 2: ¿qué capa debe actuar?</h3>
+      <select id="capaCaso">
+        <option value="">Seleccione</option>
+        <option value="pantalla">Mostrar una pantalla HTML</option>
+        <option value="ruta">Recibir la URL /productos</option>
+        <option value="validar">Validar que el correo tenga @</option>
+        <option value="guardar">Guardar en la base de datos</option>
+        <option value="datos">Representar id, nombre y correo</option>
+      </select>
+      <button class="btn btn2" onclick="simularCapa()">Responder</button>
+      <div id="capaResultado" class="resultado">Seleccione un caso.</div>
+    </div>
+  </div>
+
+  <h3>Simulador 3: constructor de rutas CRUD</h3>
+  <p>Escriba el nombre de una entidad del proyecto y genere sus rutas básicas.</p>
+  <input id="entidad" placeholder="Ejemplo: producto, libro, cita, vehiculo">
+  <button class="btn btn4" onclick="crearRutas()">Generar rutas</button>
+  <div id="rutasGeneradas" class="panel">Las rutas aparecerán aquí.</div>
+</section>
+
+<section>
+  <h2>7.1 Ejemplos reales aplicados</h2>
+  <table>
+    <thead><tr><th>Proyecto</th><th>Entidad</th><th>Ruta</th><th>Acción</th></tr></thead>
+    <tbody>
+      <tr><td>Inventario</td><td>Producto</td><td>/productos</td><td>Listar productos</td></tr>
+      <tr><td>Biblioteca</td><td>Libro</td><td>/libros/guardar</td><td>Guardar libro</td></tr>
+      <tr><td>Hospital</td><td>Paciente</td><td>/pacientes</td><td>Consultar pacientes</td></tr>
+      <tr><td>Tránsito</td><td>Vehículo</td><td>/vehiculos/nuevo</td><td>Registrar vehículo</td></tr>
+      <tr><td>Academia deportiva</td><td>Deportista</td><td>/deportistas/eliminar/5</td><td>Eliminar deportista</td></tr>
+    </tbody>
+  </table>
+
+  <div class="nota"><strong>Explique esto:</strong> el patrón es el mismo en cualquier sistema. Lo único que cambia es la entidad y las reglas del negocio.</div>
+</section>
+
+<section id="taller">
+  <h2>8. Taller práctico guiado</h2>
+  <p>Cada grupo debe aplicar la estructura MVC a una entidad de su proyecto. Si aún no tiene proyecto definido, puede usar Estudiante, Producto, Libro o Vehículo.</p>
+  <div class="timeline">
+    <div class="step"><div class="num">1</div><div class="card"><h3>Definir entidad</h3><p>Seleccione el objeto principal que manejará: estudiante, producto, cita, vehículo, libro, usuario.</p><div class="check" onclick="marcar(this,15)">Completar paso</div></div></div>
+    <div class="step"><div class="num">2</div><div class="card"><h3>Definir campos</h3><p>Ejemplo: Producto: id, nombre, precio, cantidad, categoría.</p><div class="check" onclick="marcar(this,30)">Completar paso</div></div></div>
+    <div class="step"><div class="num">3</div><div class="card"><h3>Crear rutas CRUD</h3><p>Listar, nuevo, guardar, editar y eliminar.</p><div class="check" onclick="marcar(this,45)">Completar paso</div></div></div>
+    <div class="step"><div class="num">4</div><div class="card"><h3>Identificar capas</h3><p>Controller, Service, Repository, Model y View.</p><div class="check" onclick="marcar(this,60)">Completar paso</div></div></div>
+    <div class="step"><div class="num">5</div><div class="card"><h3>Escribir código base</h3><p>Usar los ejemplos de la OVA como guía.</p><div class="check" onclick="marcar(this,78)">Completar paso</div></div></div>
+    <div class="step"><div class="num">6</div><div class="card"><h3>Explicar flujo</h3><p>Describir qué pasa desde que el usuario da clic hasta que se guarda o consulta la información.</p><div class="check" onclick="marcar(this,90)">Completar paso</div></div></div>
+    <div class="step"><div class="num">7</div><div class="card"><h3>Aplicar al proyecto</h3><p>Dejar la estructura lista para continuar el desarrollo.</p><div class="check" onclick="marcar(this,100)">Completar paso</div></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>9. Plantilla para que cada grupo trabaje</h2>
+  <p>Complete la siguiente guía en el cuaderno o en un documento.</p>
+  <table>
+    <thead><tr><th>Elemento</th><th>Respuesta del grupo</th><th>Ejemplo</th></tr></thead>
+    <tbody>
+      <tr><td>Nombre del proyecto</td><td>________________________</td><td>Sistema de Inventario</td></tr>
+      <tr><td>Entidad principal</td><td>________________________</td><td>Producto</td></tr>
+      <tr><td>Campos</td><td>________________________</td><td>id, nombre, precio, cantidad</td></tr>
+      <tr><td>Ruta para listar</td><td>________________________</td><td>/productos</td></tr>
+      <tr><td>Ruta para crear</td><td>________________________</td><td>/productos/nuevo</td></tr>
+      <tr><td>Ruta para guardar</td><td>________________________</td><td>/productos/guardar</td></tr>
+      <tr><td>Regla de negocio</td><td>________________________</td><td>El precio no puede ser negativo</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="entrega">
+  <h2>10. Entrega del taller</h2>
+  <div class="grid">
+    <div class="card"><h3>Evidencia 1</h3><p>Entidad con mínimo 4 campos.</p></div>
+    <div class="card"><h3>Evidencia 2</h3><p>Tabla de rutas CRUD.</p></div>
+    <div class="card"><h3>Evidencia 3</h3><p>Explicación de capas: Controller, Service, Repository, Model, View.</p></div>
+    <div class="card"><h3>Evidencia 4</h3><p>Captura o borrador de código comentado.</p></div>
+    <div class="card"><h3>Evidencia 5</h3><p>Aplicación al proyecto del tercer corte.</p></div>
+  </div>
+</section>
+
+<section id="proyecto">
+  <h2>11. Aplicación a los proyectos</h2>
+  <p>La tarea final es tomar los conceptos de hoy y aplicarlos al proyecto de cada grupo.</p>
+  <div class="exito">Consejo final: antes de programar, escriban el flujo en lenguaje natural. Luego traduzcan ese flujo a rutas, clases y métodos.</div>
+  <table>
+    <thead><tr><th>Lenguaje natural</th><th>Traducción a Spring</th></tr></thead>
+    <tbody>
+      <tr><td>El usuario quiere ver los productos.</td><td>@GetMapping("/productos")</td></tr>
+      <tr><td>El usuario quiere registrar un producto.</td><td>@GetMapping("/productos/nuevo")</td></tr>
+      <tr><td>El usuario envía el formulario.</td><td>@PostMapping("/productos/guardar")</td></tr>
+      <tr><td>El sistema valida el precio.</td><td>Service: if(producto.getPrecio() &lt; 0)</td></tr>
+      <tr><td>El sistema guarda en la base de datos.</td><td>Repository: save(producto)</td></tr>
+    </tbody>
+  </table>
+  <div class="nota"><strong>Mensaje de cierre:</strong> “Un buen proyecto no empieza con código. Empieza entendiendo qué necesita el usuario y cómo ese movimiento se traduce en rutas, capas y datos.”</div>
+</section>
+
+<section id="modulo-empresarial" class="cta-empresarial">
+  <h2>🚀 Continuación: módulo empresarial de Spring Boot</h2>
+
+  <p>
+    Esta OVA se complementa con una segunda página interactiva donde se explica
+    por qué las empresas usan Spring Boot en sistemas reales como bancos,
+    universidades, gobierno, logística, salud y comercio electrónico.
+  </p>
+
+  <div class="grid">
+    <div class="mini-card-dark">
+      <h3 style="color:white;">¿Qué verán allí?</h3>
+      <ul>
+        <li>Organización de proyectos empresariales.</li>
+        <li>Seguridad, roles y control de acceso.</li>
+        <li>APIs REST para conectar sistemas.</li>
+        <li>Microservicios explicados fácil.</li>
+        <li>Casos reales: banco, universidad, gobierno, salud y comercio.</li>
+        <li>Simulador empresarial por sector.</li>
+      </ul>
+    </div>
+
+    <div class="mini-card-dark">
+      <h3 style="color:white;">¿Cómo usarlo en clase?</h3>
+      <p>
+        Después de explicar Controller, Service, Repository y CRUD, abra este módulo
+        para mostrarles a los estudiantes que lo aprendido se usa en aplicaciones
+        empresariales reales.
+      </p>
+      <p>
+        Frase sugerida: <strong>“Ahora vamos a mirar cómo esto se aplica en empresas reales.”</strong>
+      </p>
+    </div>
+  </div>
+
+  <p style="margin-top:18px;">
+    <a class="mega-btn" href="https://cosmic-zuccutto-f64042.netlify.app/" target="_blank" rel="noopener">
+      🚀 Abrir módulo empresarial
+    </a>
+
+    <a class="mega-btn secondary" href="https://cosmic-zuccutto-f64042.netlify.app/" target="_blank" rel="noopener">
+      Abrir en nueva pestaña
+    </a>
+  </p>
+
+  <div class="nota" style="background:rgba(255,255,255,.92);color:#1f2937;">
+    <strong>Consejo docente:</strong> use este módulo como cierre motivador antes de asignar la tarea
+    aplicada al proyecto. Así los estudiantes conectan la sintaxis con el mundo laboral.
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <h3>Unidades Tecnológicas de Santander - UTS</h3>
+  <p>OVA Semana 2 · Spring Boot MVC, Controladores y Persistencia</p>
+  <p><strong>Docente:</strong> Pedro Antonio Ramírez García</p>
+</footer>
+
+<script>
+function avance(p){document.getElementById('barra').style.width=p+'%'}
+function marcar(el,p){el.classList.add('done');el.textContent='✅ Paso completado';document.getElementById('barra').style.width=p+'%'}
+function simularAccion(){
+  const a=document.getElementById('accion').value;
+  const r=document.getElementById('accionResultado');
+  const c=document.getElementById('accionCodigo');
+  const datos={
+    listar:['El usuario quiere ver todos los registros. Se usa GET porque solo consulta información.',`// Mostrar lista de estudiantes
+@GetMapping("/estudiantes")
+public String listar(Model model){
+    model.addAttribute("lista", estudianteService.listarTodos());
+    return "estudiantes";
+}`],
+    nuevo:['El usuario quiere abrir un formulario vacío. También se usa GET porque solo muestra una pantalla.',`// Abrir formulario nuevo
+@GetMapping("/estudiantes/nuevo")
+public String nuevo(Model model){
+    model.addAttribute("estudiante", new Estudiante());
+    return "formulario";
+}`],
+    guardar:['El usuario envía datos de un formulario. Se usa POST porque se está guardando información.',`// Guardar datos enviados desde formulario
+@PostMapping("/estudiantes/guardar")
+public String guardar(Estudiante estudiante){
+    estudianteService.guardar(estudiante);
+    return "redirect:/estudiantes";
+}`],
+    editar:['El usuario quiere modificar un registro existente. Primero se busca por ID.',`// Buscar registro para editar
+@GetMapping("/estudiantes/editar/{id}")
+public String editar(@PathVariable Long id, Model model){
+    model.addAttribute("estudiante", estudianteService.buscarPorId(id));
+    return "formulario";
+}`],
+    eliminar:['El usuario quiere borrar un registro. Se envía el ID del dato que se eliminará.',`// Eliminar registro por ID
+@GetMapping("/estudiantes/eliminar/{id}")
+public String eliminar(@PathVariable Long id){
+    estudianteService.eliminar(id);
+    return "redirect:/estudiantes";
+}`]
+  };
+  if(!datos[a]){r.textContent='Seleccione una acción.';c.textContent='Aquí aparecerá la ruta Spring.';return}
+  r.textContent=datos[a][0];c.textContent=datos[a][1];
+}
+function simularCapa(){
+  const v=document.getElementById('capaCaso').value;let t='Seleccione un caso.';
+  if(v==='pantalla')t='Capa correcta: VIEW o Vista. Es el HTML que ve el usuario.';
+  if(v==='ruta')t='Capa correcta: CONTROLLER. Recibe la URL y coordina la respuesta.';
+  if(v==='validar')t='Capa correcta: SERVICE. Allí viven las reglas del negocio.';
+  if(v==='guardar')t='Capa correcta: REPOSITORY. Se comunica con la base de datos.';
+  if(v==='datos')t='Capa correcta: MODEL o ENTITY. Representa los datos del sistema.';
+  document.getElementById('capaResultado').textContent=t;
+}
+function crearRutas(){
+  let e=document.getElementById('entidad').value.trim().toLowerCase();
+  if(!e){document.getElementById('rutasGeneradas').textContent='Escriba primero una entidad. Ejemplo: producto';return}
+  let plural=e.endsWith('s')?e:e+'s';
+  document.getElementById('rutasGeneradas').textContent=`Entidad: ${e}\n\nGET /${plural} -> listar ${plural}\nGET /${plural}/nuevo -> abrir formulario para crear ${e}\nPOST /${plural}/guardar -> guardar ${e}\nGET /${plural}/editar/{id} -> editar ${e}\nGET /${plural}/eliminar/{id} -> eliminar ${e}\n\nTraducción natural:\nEl usuario ve, crea, guarda, edita o elimina ${plural}. Spring conecta cada movimiento con una ruta y un método Java.`;
+}
+</script>
+</body>
+</html>
